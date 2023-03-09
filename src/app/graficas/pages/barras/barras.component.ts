@@ -31,8 +31,24 @@ export class BarrasComponent implements OnInit {
   public barChartData: ChartData<'bar'> = {
     labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
     datasets: [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-      { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
+      {
+        data: [65, 59, 80, 81, 56, 55, 40],
+        label: 'Series A',
+        hoverBackgroundColor: '#EF3B35',
+        backgroundColor: '#EF3B35BB',
+      },
+      {
+        data: [28, 48, 40, 19, 86, 27, 90],
+        label: 'Series B',
+        hoverBackgroundColor: '#3A43E0',
+        backgroundColor: '#3A43E0BB',
+      },
+      {
+        data: [65, 59, 80, 81, 56, 55, 40],
+        label: 'Series C',
+        hoverBackgroundColor: '#39F04C',
+        backgroundColor: '#39F04CBB',
+      },
     ],
   };
 
@@ -62,16 +78,17 @@ export class BarrasComponent implements OnInit {
   }
 
   public randomize(): void {
-    // Only Change 3 values
-    this.barChartData.datasets[0].data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      Math.round(Math.random() * 100),
-      56,
-      Math.round(Math.random() * 100),
-      40,
-    ];
+    this.barChartData.datasets.forEach((serie) => {
+      serie.data = [
+        Math.round(Math.random() * 100),
+        Math.round(Math.random() * 100),
+        Math.round(Math.random() * 100),
+        Math.round(Math.random() * 100),
+        Math.round(Math.random() * 100),
+        Math.round(Math.random() * 100),
+        Math.round(Math.random() * 100),
+      ];
+    });
 
     this.chart?.update();
   }
