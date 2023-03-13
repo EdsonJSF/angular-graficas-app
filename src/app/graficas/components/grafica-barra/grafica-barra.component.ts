@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
@@ -9,6 +9,7 @@ import { BaseChartDirective } from 'ng2-charts';
   styles: [],
 })
 export class GraficaBarraComponent implements OnInit {
+  @Input() horizontal: boolean = false;
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -28,33 +29,18 @@ export class GraficaBarraComponent implements OnInit {
   };
   public barChartType: ChartType = 'bar';
 
-  public barChartData: ChartData<'bar'> = {
-    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-    datasets: [
-      {
-        data: [65, 59, 80, 81, 56, 55, 40],
-        label: 'Series A',
-        hoverBackgroundColor: '#EF3B35',
-        backgroundColor: '#EF3B35BB',
-      },
-      {
-        data: [28, 48, 40, 19, 86, 27, 90],
-        label: 'Series B',
-        hoverBackgroundColor: '#3A43E0',
-        backgroundColor: '#3A43E0BB',
-      },
-      {
-        data: [65, 59, 80, 81, 56, 55, 40],
-        label: 'Series C',
-        hoverBackgroundColor: '#39F04C',
-        backgroundColor: '#39F04CBB',
-      },
-    ],
+  @Input() barChartData: ChartData<'bar'> = {
+    labels: [],
+    datasets: [{ data: [] }],
   };
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.horizontal) {
+      this.barChartType = 'line';
+    }
+  }
 
   // events
   public chartClicked({
