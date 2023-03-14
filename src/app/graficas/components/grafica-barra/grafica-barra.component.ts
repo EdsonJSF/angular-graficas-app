@@ -9,7 +9,8 @@ import { BaseChartDirective } from 'ng2-charts';
   styles: [],
 })
 export class GraficaBarraComponent implements OnInit {
-  @Input() horizontal: boolean = false;
+  @Input() chartType: ChartType = 'bar';
+
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -37,9 +38,7 @@ export class GraficaBarraComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    if (this.horizontal) {
-      this.barChartType = 'line';
-    }
+    this.barChartType = this.chartType || 'bar';
   }
 
   // events
