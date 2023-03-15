@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 interface Grafica {
   facebook: number;
@@ -21,8 +20,6 @@ export class GraficasService {
   constructor(private http: HttpClient) {}
 
   getGrafica(): Observable<Grafica> {
-    return this.http
-      .get<Grafica>(`${this._baseURL}/grafica`)
-      .pipe(tap(console.log));
+    return this.http.get<Grafica>(`${this._baseURL}/grafica`);
   }
 }

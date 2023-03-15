@@ -8,14 +8,7 @@ import { GraficasService } from '../../services/graficas.service';
   styles: [],
 })
 export class DonaHttpComponent implements OnInit {
-  constructor(private GraficasService: GraficasService) {}
-
-  ngOnInit(): void {
-    this.GraficasService.getGrafica().subscribe((grafica) => {
-      return grafica;
-    });
-  }
-
+  show: boolean = false;
   colorsHover: string[] = [
     '#0C8DF6',
     '#0BAED4',
@@ -25,15 +18,25 @@ export class DonaHttpComponent implements OnInit {
   ];
   colors: string[] = this.colorsHover.map((color) => color + 'BB');
 
-  proveedoresData: ChartData<'bar'> = {
-    labels: ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'],
-    datasets: [
-      {
-        data: [350, 450, 100],
-        backgroundColor: this.colors,
-        hoverBackgroundColor: this.colorsHover,
-        hoverBorderColor: this.colorsHover,
-      },
-    ],
-  };
+  proveedoresData: ChartData<'bar'> = { datasets: [{ data: [] }] };
+
+  constructor(private GraficasService: GraficasService) {}
+
+  ngOnInit(): void {
+    this.GraficasService.getGrafica().subscribe((grafica) => {
+      this.show = true;
+
+      this.proveedoresData = {
+        labels: Object.keys(grafica),
+        datasets: [
+          {
+            data: Object.values(grafica),
+            backgroundColor: this.colors,
+            hoverBackgroundColor: this.colorsHover,
+            hoverBorderColor: this.colorsHover,
+          },
+        ],
+      };
+    });
+  }
 }

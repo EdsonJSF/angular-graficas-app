@@ -64,15 +64,7 @@ export class GraficaBarraComponent implements OnInit {
 
   public randomize(): void {
     this.barChartData.datasets.forEach((serie) => {
-      serie.data = [
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-        Math.round(Math.random() * 100),
-      ];
+      serie.data = serie.data.map((data) => Math.round(Math.random() * 100));
     });
 
     this.chart?.update();
