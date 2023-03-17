@@ -18,25 +18,32 @@ export class DonaHttpComponent implements OnInit {
   ];
   colors: string[] = this.colorsHover.map((color) => color + 'BB');
 
-  proveedoresData: ChartData<'bar'> = { datasets: [{ data: [] }] };
+  proveedoresData: ChartData<'bar'> = {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        backgroundColor: this.colors,
+        hoverBackgroundColor: this.colorsHover,
+        hoverBorderColor: this.colorsHover,
+      },
+    ],
+  };
 
   constructor(private GraficasService: GraficasService) {}
 
   ngOnInit(): void {
-    this.GraficasService.getGrafica().subscribe((grafica) => {
-      this.show = true;
+    // this.GraficasService.getGrafica().subscribe((grafica) => {
+    //   this.show = true;
+    //   this.proveedoresData.labels = Object.keys(grafica);
+    //   this.proveedoresData.datasets[0].data = Object.values(grafica);
+    // });
 
-      this.proveedoresData = {
-        labels: Object.keys(grafica),
-        datasets: [
-          {
-            data: Object.values(grafica),
-            backgroundColor: this.colors,
-            hoverBackgroundColor: this.colorsHover,
-            hoverBorderColor: this.colorsHover,
-          },
-        ],
-      };
+    /* Get Grafica with map RXJS */
+    this.GraficasService.getGraficaRXJS().subscribe(({ labels, values }) => {
+      this.show = true;
+      this.proveedoresData.labels = labels;
+      this.proveedoresData.datasets[0].data = values;
     });
   }
 }
